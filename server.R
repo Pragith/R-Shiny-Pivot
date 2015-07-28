@@ -4,6 +4,8 @@ library(sqldf)
 
 shinyServer(function(input, output, session) {
   
+  source("SQL_Gen.R")
+  
   data = read.csv("dataset.csv")
   colnames(data) = gsub(".","",colnames(data), fixed=TRUE)
   data.cols = colnames(data)
