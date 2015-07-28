@@ -17,7 +17,6 @@ shinyUI(basicPage(
                                      selected=c("UsualWeeklyEarnings","UsualHoursWorked"))
                     ),
                     div(class="container span3"
-                        ,helpText("rowsInp")
                         ,actionButton("updateselect2","Update")
                         ,shinyalert("shinyalert4")
                     )

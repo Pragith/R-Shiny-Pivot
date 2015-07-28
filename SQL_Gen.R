@@ -1,40 +1,7 @@
-
-# SUM(CASE 
-# WHEN Sex == "Female" THEN `Usual.Hours.Worked`
-# END) AS FemaleUsualHoursWorked
-# ,SUM(CASE 
-# WHEN Sex == "Female" THEN `Usual.Weekly.Earnings`
-# END) AS FemaleUsualWeeklyEarnings
-# 
-# ,SUM(CASE 
-# WHEN Sex == "Male" THEN `Usual.Hours.Worked`
-# END) AS MaleUsualHoursWorked
-# ,SUM(CASE 
-# WHEN Sex == "Male" THEN `Usual.Weekly.Earnings`
-# END) AS MaleUsualWeeklyEarnings
-# 
-
-# Format:
-#   SUM(CASE
-#       WHEN Column1 == "ColVal1" THEN "Value1"
-#       END) AS ColVal1Value1
-#   SUM(CASE
-#       WHEN Column1 == "ColVal1" THEN "Value2"
-#       END) AS ColVal1Value2
-#   SUM(CASE
-#       WHEN Column1 == "ColVal2" THEN "Value1"
-#       END) AS ColVal2Value1
-#   SUM(CASE
-#       WHEN Column1 == "ColVal2" THEN "Value2"
-#       END) AS ColVal2Value2
-
-colsFn = function(dataset, c, v){
-  #c = "State, Sex"
-  #v = "UsualHoursWorked,UsualWeeklyEarnings"
+colsFn = function(d, c, v){
   colsQ <<- list()
-  #dataset = "data"
-  
-  colvals = sqldf(paste("SELECT DISTINCT",c,"FROM",dataset))
+  data = d
+  colvals = sqldf(paste("SELECT DISTINCT",c,"FROM data"))
   
   cols = strsplit(c, ",")
   vals = strsplit(v, ",")
@@ -50,8 +17,8 @@ colsFn = function(dataset, c, v){
 }
 
 
-genFn = function(dataset, r, c, v){
-  
+genFn = function(dataset, data, r, c, v){
+
   ##  Start with SELECT
   q = "SELECT "
   
@@ -59,7 +26,7 @@ genFn = function(dataset, r, c, v){
   q = paste(q,r,sep="")
   
   ##  Add in "Columns" and "Values"
-  q = paste(q, ",", colsFn(dataset,c,v))
+  q = paste(q, ",", colsFn(data,c,v))
   
   ##  Add "From"
   q = paste(q," FROM ",dataset,sep="")
@@ -70,6 +37,4 @@ genFn = function(dataset, r, c, v){
   q
 }
 
-
-
-filtFn = function(){}
+#filtFn = function(){}
